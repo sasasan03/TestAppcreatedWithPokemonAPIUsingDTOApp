@@ -25,8 +25,15 @@ struct PokemonListClient {
     }
     
     func fetchData() async throws -> [Pokemon] {
-        var urls = getURL()
+        let urls:[URL?] = getURL()
+        let unwrappedURL:[URL] = try urls.map {
+            guard let urls = $0 else { throw PokeAPIClientError.invalidURLError }
+            return urls
+        }
+        let request:[URLRequest] = unwrappedURL.map { URLRequest(url: $0)}
         
+        
+        return [Pokemon]()
     }
     
     private func getURL() -> [URL?] {
