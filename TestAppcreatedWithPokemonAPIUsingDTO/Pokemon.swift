@@ -9,5 +9,9 @@ import Foundation
 
 struct Pokemon {
     let name: String
-    let spritesImage: String
+    let spritesImage: Sprites
+}
+
+struct Sprites {
+    let frontDefaulft: String
 }
