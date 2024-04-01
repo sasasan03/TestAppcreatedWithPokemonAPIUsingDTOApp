@@ -13,4 +13,6 @@ enum PokeAPIClientError: Error {
     case connectionError
     // データを受け取ったがパースに失敗した場合に投げられるエラー
     case responseParseError
+    
+    case unknown
 }

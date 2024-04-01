@@ -10,6 +10,7 @@ import Foundation
 struct PokemonListClient {
     struct ResponseDTO: Decodable {
         struct Pokemon: Decodable{
+            let id: Int
             let name: String
             let sprites: Sprites
             
@@ -42,7 +43,7 @@ struct PokemonListClient {
             for try await pokemon in group {
                 pokemonList.append(pokemon)
             }
-            return pokemonList
+            return pokemonList.sorted { $0.id < $1.id }
         }
     }
     
@@ -56,6 +57,7 @@ struct PokemonListClient {
 private extension Pokemon {
     init(dto: PokemonListClient.ResponseDTO.Pokemon) {
         self = .init(
+            id: dto.id,
             name: dto.name,
             spritesImage: Sprites(dto: dto.sprites)
         )

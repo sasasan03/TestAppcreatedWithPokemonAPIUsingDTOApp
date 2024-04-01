@@ -8,19 +8,34 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var pokemons:[Pokemon] = []
+    let client = PokemonListClient()
     
     var body: some View {
-        List(){
-            
+        NavigationStack{
+            List(pokemons, id: \.name){ pokemon in
+                PokemonRowView(name: pokemon.name, url: pokemon.spritesImage.frontDefaulft)
+            }
+            .task {
+                do {
+                    pokemons = try await client.fetchPokemonDataList()
+                } catch  {
+                    print("エラー")
+                }
+            }
+            .navigationTitle("Pokemon 1~151")
         }
+        
     }
 }
 
 struct PokemonRowView: View {
+    let name: String
+    let url: URL
     var body: some View {
         HStack {
-            Text("")
-            AsyncImage(url: URL(string: "https://www.yahoo.com/")!)
+            Text(name)
+            AsyncImage(url: url)
         }
     }
 }
