@@ -27,7 +27,7 @@ struct PokemonListClient {
     func fetchPokemonDataList() async throws -> [Pokemon] {
         // URL取得
         let urls:[URL?] = getURL()
-        
+        // 『withThrowingTaskGroup』でURLからポケモンの配列を取得
         return try await withThrowingTaskGroup(of: Pokemon.self) { group in
             for url in urls {
                 guard let url else { continue } //不正なURLはスキップ
@@ -37,7 +37,7 @@ struct PokemonListClient {
                     return Pokemon(dto: dto)
                 }
             }
-            // 取得してきたポケモンの配列
+            
             var pokemonList: [Pokemon] = []
             for try await pokemon in group {
                 pokemonList.append(pokemon)
