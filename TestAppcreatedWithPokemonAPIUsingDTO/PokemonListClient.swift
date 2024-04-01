@@ -27,28 +27,23 @@ struct PokemonListClient {
     func fetchPokemonDataList() async throws -> [Pokemon] {
         // URL取得
         let urls:[URL?] = getURL()
-        // 取得たポケモンを追加していくためのプロパティ
-        var pokemonList: [Pokemon] = []
         
-        do {
-            //『withThrowingTaskGroup』複数のデータをフェッチしてくるためのメソッド(引数は`@escapingクロージャ`)
-            try await withThrowingTaskGroup(of: Pokemon.self) { pokemons in
-                for url in urls {
-                    guard let url else { throw PokeAPIClientError.invalidURLError }//{ continue } //不正なURLはスキップ
-                    pokemons.addTask {
-                        let (data, _) = try await URLSession.shared.data(from: url)
-                        let dto = try JSONDecoder().decode(ResponseDTO.Pokemon.self, from: data)
-                        return Pokemon(dto: dto)
-                    }
-                }
-                for try await pokemon in pokemons {
-                    pokemonList.append(pokemon)
+        return try await withThrowingTaskGroup(of: Pokemon.self) { group in
+            for url in urls {
+                guard let url else { continue } //不正なURLはスキップ
+                group.addTask {
+                    let (data, _) = try await URLSession.shared.data(from: url)
+                    let dto = try JSONDecoder().decode(ResponseDTO.Pokemon.self, from: data)
+                    return Pokemon(dto: dto)
                 }
             }
-        } catch {
-            throw PokeAPIClientError.responseParseError
+            // 取得してきたポケモンの配列
+            var pokemonList: [Pokemon] = []
+            for try await pokemon in group {
+                pokemonList.append(pokemon)
+            }
+            return pokemonList
         }
-        return pokemonList
     }
     
     private func getURL() -> [URL?] {

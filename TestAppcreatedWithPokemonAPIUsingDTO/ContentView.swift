@@ -8,14 +8,20 @@
 import SwiftUI
 
 struct ContentView: View {
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        List(){
+            
         }
-        .padding()
+    }
+}
+
+struct PokemonRowView: View {
+    var body: some View {
+        HStack {
+            Text("")
+            AsyncImage(url: URL(string: "https://www.yahoo.com/")!)
+        }
     }
 }
 
