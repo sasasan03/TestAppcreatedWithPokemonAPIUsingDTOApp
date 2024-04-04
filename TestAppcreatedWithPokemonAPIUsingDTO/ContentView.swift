@@ -14,13 +14,16 @@ struct ContentView: View {
     var body: some View {
         NavigationStack{
             List(pokemons, id: \.name){ pokemon in
-                PokemonRowView(name: pokemon.name, url: pokemon.spritesImage.frontDefaulft)
+                PokemonRowView(
+                    name: pokemon.name,
+                    url: pokemon.spritesImage.frontDefault
+                )
             }
             .task {
                 do {
                     pokemons = try await client.fetchPokemonDataList()
-                } catch  {
-                    print("エラー")
+                } catch {
+                    print(error)
                 }
             }
             .navigationTitle("Pokemon 1~151")

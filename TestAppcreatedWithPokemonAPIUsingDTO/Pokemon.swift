@@ -14,5 +14,5 @@ struct Pokemon {
 }
 
 struct Sprites {
-    let frontDefaulft: URL
+    let frontDefault: URL
 }
