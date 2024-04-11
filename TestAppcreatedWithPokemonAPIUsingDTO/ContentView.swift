@@ -16,7 +16,7 @@ struct ContentView: View {
             List(pokemons, id: \.name){ pokemon in
                 PokemonRowView(
                     name: pokemon.name,
-                    url: pokemon.spritesImage.frontDefault
+                    url: pokemon.imageURL.frontDefault
                 )
             }
             .task {
@@ -28,7 +28,6 @@ struct ContentView: View {
             }
             .navigationTitle("Pokemon 1~151")
         }
-        
     }
 }
 

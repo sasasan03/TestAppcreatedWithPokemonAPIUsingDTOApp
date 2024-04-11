@@ -10,7 +10,7 @@ import Foundation
 struct Pokemon {
     let id: Int
     let name: String
-    let spritesImage: Sprites
+    let imageURL: Sprites //画像しか持たせる予定はない。
 }
 
 struct Sprites {
