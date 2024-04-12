@@ -59,7 +59,7 @@ private extension Pokemon {
         self = .init(
             id: dto.id,
             name: dto.name,
-            spritesImage: Sprites(dto: dto.sprites)
+            imageURL: Sprites(dto: dto.sprites)
         )
     }
 }
