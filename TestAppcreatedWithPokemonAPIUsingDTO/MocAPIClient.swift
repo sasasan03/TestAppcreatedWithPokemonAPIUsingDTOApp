@@ -8,5 +8,7 @@
 import Foundation
 
 struct MocAPIClient{
-    
+    struct ResponseDTO: Decodable{
+        
+    }
 }
