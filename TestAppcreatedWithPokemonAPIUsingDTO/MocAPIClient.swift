@@ -30,8 +30,7 @@ struct MocAPIClient{
     
     func fetch() async throws -> [Pokemon] {
         let urlString = URLLink().urlString
-        let url = URL(string: urlString)
-        guard let url else { return [] }
+        guard let url = URL(string: urlString) else { return [] }
         let urlRequest = URLRequest(url: url)
         let (data,_) = try await URLSession.shared.data(for: urlRequest)
         let dto = try JSONDecoder().decode([ResponseDTO.Pokemon].self, from: data)
