@@ -29,7 +29,8 @@ struct MocAPIClient{
     }
     
     func fetch() async throws -> [Pokemon] {
-        let url = URL(string: "https://662656e5052332d55322860a.mockapi.io/api/v1/new_pokemon")
+        let urlString = URLLink().urlString
+        let url = URL(string: urlString)
         guard let url else { return [] }
         let urlRequest = URLRequest(url: url)
         let (data,_) = try await URLSession.shared.data(for: urlRequest)
