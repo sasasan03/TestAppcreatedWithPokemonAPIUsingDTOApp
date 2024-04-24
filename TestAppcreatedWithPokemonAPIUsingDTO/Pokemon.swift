@@ -10,9 +10,9 @@ import Foundation
 struct Pokemon {
     let id: Int
     let name: String
-    let imageURL: Sprites //画像しか持たせる予定はない。
+    let sprite: Sprite //画像しか持たせる予定はない。
 }
 
-struct Sprites {
+struct Sprite {
     let frontDefault: URL
 }

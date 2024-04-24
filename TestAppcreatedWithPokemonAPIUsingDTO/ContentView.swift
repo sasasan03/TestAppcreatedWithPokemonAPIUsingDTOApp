@@ -9,19 +9,21 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var pokemons:[Pokemon] = []
-    let client = PokemonListClient()
+//    let client = PokemonListClient()
+    let client = MocAPIClient()
     
     var body: some View {
         NavigationStack{
             List(pokemons, id: \.name){ pokemon in
                 PokemonRowView(
                     name: pokemon.name,
-                    url: pokemon.imageURL.frontDefault
+                    url: pokemon.sprite.frontDefault
                 )
             }
             .task {
                 do {
-                    pokemons = try await client.fetchPokemonDataList()
+//                    pokemons = try await client.fetchPokemonDataList()
+                    pokemons = try await client.fetch()
                 } catch {
                     print(error)
                 }
@@ -35,7 +37,7 @@ struct PokemonRowView: View {
     let name: String
     let url: URL
     var body: some View {
-        HStack {
+        HStack{
             Text(name)
             AsyncImage(url: url)
         }

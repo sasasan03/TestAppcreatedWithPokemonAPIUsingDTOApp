@@ -59,12 +59,12 @@ private extension Pokemon {
         self = .init(
             id: dto.id,
             name: dto.name,
-            imageURL: Sprites(dto: dto.sprites)
+            sprite: Sprite(dto: dto.sprites)
         )
     }
 }
 
-private extension Sprites {
+private extension Sprite {
     init(dto: PokemonListClient.ResponseDTO.Pokemon.Sprites){
         self = .init(frontDefault: dto.frontDefaulft)
     }
