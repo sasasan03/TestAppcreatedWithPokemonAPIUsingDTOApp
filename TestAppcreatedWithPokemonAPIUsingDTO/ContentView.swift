@@ -39,7 +39,13 @@ struct PokemonRowView: View {
     var body: some View {
         HStack{
             Text(name)
-            AsyncImage(url: url)
+            AsyncImage(url: url) { image in
+                image.resizable()
+                    .scaledToFit()
+                    .frame(width: 200,height: 200)
+            } placeholder: {
+                ProgressView()
+            }
         }
     }
 }
