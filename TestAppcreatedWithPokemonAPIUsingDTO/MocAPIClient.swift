@@ -30,7 +30,7 @@ struct MocAPIClient{
     
     func fetch() async throws -> [Pokemon] {
         let urlString = URLLink().urlString
-        guard let url = URL(string: urlString) else { return [] }
+        guard let url = URL(string: urlString) else { throw MockAPIClientError.invaildURL }
         let urlRequest = URLRequest(url: url)
         let (data,_) = try await URLSession.shared.data(for: urlRequest)
         let dto = try JSONDecoder().decode([ResponseDTO.Animal].self, from: data)

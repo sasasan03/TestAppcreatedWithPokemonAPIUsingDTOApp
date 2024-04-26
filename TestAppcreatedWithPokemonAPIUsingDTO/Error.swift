@@ -21,4 +21,6 @@ enum PokeAPIClientError: Error {
 enum MockAPIClientError : Error {
     // デコード時にJSONの型をSwiftの型に変換できない時に投げられる
     case typeMismatchError
+    // URLが無効
+    case invaildURL
 }
