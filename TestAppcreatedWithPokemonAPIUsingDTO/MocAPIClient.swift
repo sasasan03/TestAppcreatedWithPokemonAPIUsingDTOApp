@@ -34,13 +34,16 @@ struct MocAPIClient{
         let urlRequest = URLRequest(url: url)
         let (data,_) = try await URLSession.shared.data(for: urlRequest)
         let dto = try JSONDecoder().decode([ResponseDTO.Animal].self, from: data)
-        return [Pokemon](dto: dto)
+        return try [Pokemon](dto: dto)
     }
 }
 
 private extension Pokemon {
-    init(dto: MocAPIClient.ResponseDTO.Animal) {
-        let parseID = { Int(dto.id) ?? 0 }()
+    init(dto: MocAPIClient.ResponseDTO.Animal) throws {
+        // 将来的に文字列が入ってくる可能性があるため。パースできなかった時のためにエラーを投げれるようにしておく。
+        guard let parseID = { Int(dto.id) }() else {
+            throw MockAPIClientError.typeMismatchError
+        }
         self = .init(
             id: parseID,
             name: dto.name,
@@ -56,7 +59,7 @@ private extension Sprite {
 }
 
 private extension [Pokemon] {
-    init(dto: [MocAPIClient.ResponseDTO.Animal]) {
-        self = dto.map { Pokemon(dto: $0) }
+    init(dto: [MocAPIClient.ResponseDTO.Animal]) throws {
+        self = try dto.map { try Pokemon(dto: $0) }
     }
 }
