@@ -16,6 +16,21 @@ class Calculator {
         a - b
     }
     
+    func div(_ a: Int, _ b: Int) -> Int? {
+        if b == 0 {
+            return nil
+        } else {
+            return a / b
+        }
+    }
+}
+
+enum ErrorType: Error {
+    case error1
+    case error2
+}
+
+class DataSourceRepository{
     var isError = true
     
     func fetchData() throws {
@@ -26,9 +41,19 @@ class Calculator {
             print("#データ取得")
         }
     }
-}
+    
+    func fetchData(txt: String, _ handler: @escaping (String) -> Void){
+        print("#1")
+        DispatchQueue.global().async {
+            print("#3")
+            Thread.sleep(forTimeInterval: 2)
+            DispatchQueue.main.async {
+                handler("\(txt)を取得完了")
+                print("#4txt：\(txt)")
+            }
+            print("#5")
+        }
+        print("#2")
+    }
 
-enum ErrorType: Error {
-    case error1
-    case error2
 }
