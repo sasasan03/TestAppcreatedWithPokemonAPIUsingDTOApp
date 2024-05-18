@@ -70,13 +70,20 @@ class CalculatorTests: XCTestCase {
     }
     
     func testAdd(){
+        この関数を読んだ行番号を表示()//73
+        この関数を読んだ行番号を表示()//74
+        この関数を読んだ行番号を表示(number: 999) //使う意味ない。
         XCTAssertEqual(
             calc.add(10, 20),
             30,
             "値が等しくありません",
-            file: #file,
-            line: #line
+            file: #file,//指定できちゃうけど、指定する必要はない。sqwiftではしょうがない。
+            line: #line//
         )
+    }
+    
+    func この関数を読んだ行番号を表示(number: Int = #line){ //
+        print("\(number)行番号")
     }
     
     func testSub(){
@@ -163,4 +170,43 @@ class DataSourceTest: XCTestCase{
         }
         wait(for: [exp], timeout: 3)
     }
+}
+
+
+class DateObjectTest: XCTestCase {
+    
+    var dataSource: DateObject!
+    
+    override func setUp() {
+        super.setUp()
+        self.dataSource = DateObject()
+    }
+    
+    override func tearDown() {
+        super.tearDown()
+    }
+    
+    func test_isHoliday(){
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy/MM/dd"
+        
+        var date: Date!
+        
+//        print("##",dataSource.isHoliday().description)
+//        XCTAssertFalse(dataSource.isHoliday())
+        
+        date = formatter.date(from: "2024/05/13")
+        XCTAssertFalse(dataSource.isHoliday(date))
+        
+        date = formatter.date(from: "2024/05/17")
+        XCTAssertFalse(dataSource.isHoliday(date))
+        
+        date = formatter.date(from: "2024/05/18")
+        XCTAssertTrue(dataSource.isHoliday(date))
+        
+        date = formatter.date(from: "2024/05/19")
+        XCTAssertTrue(dataSource.isHoliday(date))
+    }
+    
 }

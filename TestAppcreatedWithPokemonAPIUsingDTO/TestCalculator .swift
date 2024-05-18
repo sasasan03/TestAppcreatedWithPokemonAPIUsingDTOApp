@@ -57,3 +57,24 @@ class DataSourceRepository{
     }
 
 }
+
+class DateObject {
+    
+    func isHoliday(_ date: Date = Date()) -> Bool{
+        print("#",date.description)
+        
+        let calendar = Calendar.current
+        let weekday = calendar.component(.weekday, from: date)
+        return weekday == 1 || weekday == 7
+    }
+    
+
+//    func isHoliday() -> Bool{
+//        let now = Date()
+//        print("##now", now)
+//        let calendar = Calendar.current
+//        let weekday = calendar.component(.weekday, from: now)
+//        return weekday == 1 || weekday == 7
+//    }
+
+}
