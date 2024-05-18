@@ -15,12 +15,7 @@ struct PokemonListClient {
             let sprites: Sprites
             
             struct Sprites: Decodable {
-                let frontDefaulft: URL
-                
-                // swiftの型に置き換える。
-                enum CodingKeys: String, CodingKey {
-                    case frontDefaulft = "front_default"
-                }
+                let frontDefault: URL
             }
         }
     }
@@ -34,7 +29,9 @@ struct PokemonListClient {
                 guard let url else { continue }
                 group.addTask {
                     let (data, _) = try await URLSession.shared.data(from: url)
-                    let dto = try JSONDecoder().decode(ResponseDTO.Pokemon.self, from: data)
+                    let jsonDecoder = JSONDecoder()
+                    jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
+                    let dto = try jsonDecoder.decode(ResponseDTO.Pokemon.self, from: data)
                     return Pokemon(dto: dto)
                 }
             }
@@ -66,6 +63,6 @@ private extension Pokemon {
 
 private extension Sprite {
     init(dto: PokemonListClient.ResponseDTO.Pokemon.Sprites){
-        self = .init(frontDefault: dto.frontDefaulft)
+        self = .init(frontDefault: dto.frontDefault)
     }
 }
