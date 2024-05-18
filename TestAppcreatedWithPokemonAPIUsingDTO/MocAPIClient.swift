@@ -19,7 +19,7 @@ struct MocAPIClient{
                 let id: String
                 let newPokemonId: String
                 
-                enum CodingKeys: String, CodingKey {
+                private enum CodingKeys: String, CodingKey {
                     case frontImage = "front_image"
                     case id
                     case newPokemonId = "new_pokemonId"
@@ -33,8 +33,6 @@ struct MocAPIClient{
         guard let url = URL(string: urlString) else { throw MockAPIClientError.invaildURL }
         let urlRequest = URLRequest(url: url)
         let (data,_) = try await URLSession.shared.data(for: urlRequest)
-        let jsonDecoder = JSONDecoder()
-        jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
         let dto = try JSONDecoder().decode([ResponseDTO.Animal].self, from: data)
         return try [Pokemon](dto: dto)
     }
