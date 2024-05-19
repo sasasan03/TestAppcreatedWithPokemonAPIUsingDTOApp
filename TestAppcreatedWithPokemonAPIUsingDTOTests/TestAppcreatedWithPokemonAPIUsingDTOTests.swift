@@ -210,3 +210,28 @@ class DateObjectTest: XCTestCase {
     }
     
 }
+
+//モックを使って差し替えを行う。
+class CalenderUtilTest: XCTestCase {
+    
+    func test_isHoliday(){
+        var mock = MockDateProvider()
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy/MM/dd"
+        
+        mock.date = formatter.date(from: "2024/05/18")
+        XCTAssertTrue(CalenderUtil(dateProtocol: mock).isHoliday())
+        
+        mock.date = formatter.date(from: "2024/05/19")
+        XCTAssertTrue(CalenderUtil(dateProtocol: mock).isHoliday())
+        
+        mock.date = formatter.date(from: "2024/05/17")
+        XCTAssertFalse(CalenderUtil(dateProtocol: mock).isHoliday())
+        
+        mock.date = formatter.date(from: "2024/05/20")
+        XCTAssertFalse(CalenderUtil(dateProtocol: mock).isHoliday())
+    }
+}
+
+

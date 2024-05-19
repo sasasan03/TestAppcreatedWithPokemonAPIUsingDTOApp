@@ -71,7 +71,13 @@ class DateObject {
 
 //    func isHoliday() -> Bool{
 //        let now = Date()
-//        print("##now", now)
+//        let calendar = Calendar.current
+//        let weekday = calendar.component(.weekday, from: now)
+//        return weekday == 1 || weekday == 7
+//    }
+    
+//    func isHoliday(_ now: Date) -> Bool{ //🟨これはおっけ？
+//        print("#",now.description)
 //        let calendar = Calendar.current
 //        let weekday = calendar.component(.weekday, from: now)
 //        return weekday == 1 || weekday == 7
