@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		692BA57A2BF86D83005C0A73 /* CalenderUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692BA5792BF86D83005C0A73 /* CalenderUtil.swift */; };
+		692BA57C2BFCA89A005C0A73 /* GitHub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692BA57B2BFCA89A005C0A73 /* GitHub.swift */; };
+		692BA57E2BFCA8BD005C0A73 /* GitHubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692BA57D2BFCA8BD005C0A73 /* GitHubView.swift */; };
 		6986A0AC2BB6517500CAE47A /* TestAppcreatedWithPokemonAPIUsingDTOApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6986A0AB2BB6517500CAE47A /* TestAppcreatedWithPokemonAPIUsingDTOApp.swift */; };
 		6986A0AE2BB6517500CAE47A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6986A0AD2BB6517500CAE47A /* ContentView.swift */; };
 		6986A0B02BB6517900CAE47A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6986A0AF2BB6517900CAE47A /* Assets.xcassets */; };
@@ -42,6 +44,8 @@
 
 /* Begin PBXFileReference section */
 		692BA5792BF86D83005C0A73 /* CalenderUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalenderUtil.swift; sourceTree = "<group>"; };
+		692BA57B2BFCA89A005C0A73 /* GitHub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHub.swift; sourceTree = "<group>"; };
+		692BA57D2BFCA8BD005C0A73 /* GitHubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubView.swift; sourceTree = "<group>"; };
 		6986A0A82BB6517500CAE47A /* TestAppcreatedWithPokemonAPIUsingDTO.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestAppcreatedWithPokemonAPIUsingDTO.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6986A0AB2BB6517500CAE47A /* TestAppcreatedWithPokemonAPIUsingDTOApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestAppcreatedWithPokemonAPIUsingDTOApp.swift; sourceTree = "<group>"; };
 		6986A0AD2BB6517500CAE47A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -117,6 +121,8 @@
 				6986A0DB2BB7DFB800CAE47A /* Error.swift */,
 				69C2154A2BDDF3C500F98C97 /* TestCalculator .swift */,
 				692BA5792BF86D83005C0A73 /* CalenderUtil.swift */,
+				692BA57B2BFCA89A005C0A73 /* GitHub.swift */,
+				692BA57D2BFCA8BD005C0A73 /* GitHubView.swift */,
 				6986A0AF2BB6517900CAE47A /* Assets.xcassets */,
 				6986A0B12BB6517900CAE47A /* Preview Content */,
 			);
@@ -278,6 +284,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				692BA57E2BFCA8BD005C0A73 /* GitHubView.swift in Sources */,
+				692BA57C2BFCA89A005C0A73 /* GitHub.swift in Sources */,
 				6986A0DA2BB66C2400CAE47A /* Pokemon.swift in Sources */,
 				69C215412BD4CC7A00F98C97 /* MocAPIClient.swift in Sources */,
 				69C2154B2BDDF3C500F98C97 /* TestCalculator .swift in Sources */,
