@@ -12,14 +12,14 @@ protocol DateProtocol {
     func now() -> Date
 }
 
-//本番環境で使用
+////本番環境で使用
 class DateDefaults: DateProtocol{
     func now()-> Date {
         return Date()
     }
 }
 
-//休日かどうかを判断するメソッドを持つクラス
+////休日かどうかを判断するメソッドを持つクラス
 class CalenderUtil {
     let dateProtocol: DateProtocol
     
@@ -28,15 +28,17 @@ class CalenderUtil {
     }
     
     func isHoliday() -> Bool{
+        
+        let now = dateProtocol.now()
         let calendar = Calendar.current
-        let weekday = calendar.component(.weekday, from: dateProtocol.now())
+        let weekday = calendar.component(.weekday, from: now)
         return weekday == 1 || weekday == 7
     }
 }
 
 //モック
 struct MockDateProvider: DateProtocol {
-    var date: Date! = nil
+    var date: Date? = nil //!はダメなのか？
     
     func now() -> Date {
         return date!

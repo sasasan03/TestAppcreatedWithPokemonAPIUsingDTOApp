@@ -193,9 +193,6 @@ class DateObjectTest: XCTestCase {
         
         var date: Date!
         
-//        print("##",dataSource.isHoliday().description)
-//        XCTAssertFalse(dataSource.isHoliday())
-        
         date = formatter.date(from: "2024/05/13")
         XCTAssertFalse(dataSource.isHoliday(date))
         
