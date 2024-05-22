@@ -8,24 +8,25 @@
 import Foundation
 
 enum GitHubAPIError: Error {
-    case networkError(Error) // ネットワーク関連のエラー
+    case networkError // ネットワーク関連のエラー
     case invalidURL // 無効なURL
     case decodingError(Error) // JSONデコードエラー
-    case unauthorized // 認証エラー
-    case starCountUnderTen //スターの数が１０個未満
     case notFound // リソースが見つからない
-    case rateLimitExceeded // レート制限超過
     case serverError(statusCode: Int) // サーバーエラー（ステータスコード付き）
+    case repositoryEmpty // リポジトリーが空
     case unknown // 不明なエラー
 }
 
 //エンティティ
-struct GitHubRepository: Decodable, Equatable {
+struct GitHubRepository: Decodable, Equatable, Comparable {
+    static func < (lhs: GitHubRepository, rhs: GitHubRepository) -> Bool {
+        return lhs.stargazersCount < rhs.stargazersCount
+    }
+    
     let id: Int
-    let star: Int
+    let stargazersCount: Int
     let name: String
 }
-
 
 //データを取得するクラス
 class GitHubAPIClient {
@@ -34,10 +35,10 @@ class GitHubAPIClient {
         let url = URL(string: "https://api.github.com/users/\(user)/repos")
         guard let url else { throw GitHubAPIError.invalidURL }
         let request = URLRequest(url: url)
-        let (date, _) = try await URLSession.shared.data(for: request)
+        let (data, _) = try await URLSession.shared.data(for: request)
         let jsonDecoder = JSONDecoder()
         jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
-        let gitHubRepositories = try jsonDecoder.decode([GitHubRepository].self, from: date)
+        let gitHubRepositories = try jsonDecoder.decode([GitHubRepository].self, from: data)
         return gitHubRepositories
     }
 }
@@ -49,18 +50,19 @@ class GitHubRepositoryManager {
     private let client: GitHubAPIClient
     private var repository: [GitHubRepository]? = nil
     
-    //スター数が１０個以上のリポジトリを返す
+    //スター数が１０個以上のリポジトリをフィルターし、スターの多い数からスタックに追加した配列を返す。
     var majorRepository: [GitHubRepository] {
-        guard let repository else { return []}
-        return repository.filter { $0.star >= 10 }
+        guard let repository else { return [] }
+        return repository.filter({ $0.stargazersCount >= 10 }).sorted(by: <)
     }
     
     init(){
         self.client = GitHubAPIClient()
     }
     
-    func load(user: String) async throws {
+    func load(user: String) async throws -> [GitHubRepository]? {
         self.repository = try await self.client.fetchRepository(user: user)
+        return self.repository
     }
     
 }

@@ -9,11 +9,35 @@ import SwiftUI
 
 struct GitHubView: View {
     
-    @State private var repositories = GitHubAPIClient()
+    @State private var repositories: [GitHubRepository] = []
     
     var body: some View {
-        List(){
-            
+        if !repositories.isEmpty {
+            List(repositories, id: \.id){ repository in
+                VStack{
+                    HStack{
+                        Text("name:\(repository.name)")
+                        Spacer()
+                    }
+                    HStack{
+                        Text("⭐️✖️\(repository.stargazersCount)")
+                        Spacer()
+                    }
+                }
+            }
+        } else {
+            Text("⚠️date nowloading")
+                .task {
+                    do {
+                        let repoManager = GitHubRepositoryManager()
+                        let _ = try await repoManager.load(user: "apple")
+                        repositories = repoManager.majorRepository
+                    } catch let error as GitHubAPIError {
+                        print(error)
+                    } catch {
+                        print("unknown........")
+                    }
+                }
         }
     }
 }
