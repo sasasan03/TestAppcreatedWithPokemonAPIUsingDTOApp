@@ -29,7 +29,7 @@ struct GitHubRepository: Decodable, Equatable, Comparable {
 }
 
 //データを取得するクラス
-class GitHubAPIClient {
+class GitHubAPIClient: GitHubAPIProtocol {
     
     func fetchRepository(user: String) async throws -> [GitHubRepository] {
         let url = URL(string: "https://api.github.com/users/\(user)/repos")
@@ -44,10 +44,15 @@ class GitHubAPIClient {
 }
 
 
+protocol GitHubAPIProtocol {
+    func fetchRepository(user: String) async throws -> [GitHubRepository]
+}
+
+
 // リポジトリの管理を行う。
 class GitHubRepositoryManager {
     
-    private let client: GitHubAPIClient// 🍔
+    let client: GitHubAPIProtocol// 🍔型をプロトコルにする
     private var repository: [GitHubRepository]? = nil
     
     //スター数が１０個以上のリポジトリをフィルターし、スターの多い数からスタックに追加した配列を返す。
@@ -56,8 +61,8 @@ class GitHubRepositoryManager {
         return repository.filter({ $0.stargazersCount >= 10 }).sorted(by: <)
     }
     
-    init(){
-        self.client = GitHubAPIClient()// 🍔ガッツリGitHubAPIClientに依存している
+    init(client: GitHubAPIProtocol = GitHubAPIClient()){
+        self.client = client// 🍔プロトコルを使って差し替え可能に変更
     }
     
     func load(user: String) async throws -> [GitHubRepository]? {
