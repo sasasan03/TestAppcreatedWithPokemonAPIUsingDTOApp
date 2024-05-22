@@ -47,7 +47,7 @@ class GitHubAPIClient {
 // リポジトリの管理を行う。
 class GitHubRepositoryManager {
     
-    private let client: GitHubAPIClient
+    private let client: GitHubAPIClient// 🍔
     private var repository: [GitHubRepository]? = nil
     
     //スター数が１０個以上のリポジトリをフィルターし、スターの多い数からスタックに追加した配列を返す。
@@ -57,7 +57,7 @@ class GitHubRepositoryManager {
     }
     
     init(){
-        self.client = GitHubAPIClient()
+        self.client = GitHubAPIClient()// 🍔ガッツリGitHubAPIClientに依存している
     }
     
     func load(user: String) async throws -> [GitHubRepository]? {
