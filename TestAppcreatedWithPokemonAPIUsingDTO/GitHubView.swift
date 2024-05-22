@@ -12,32 +12,37 @@ struct GitHubView: View {
     @State private var repositories: [GitHubRepository] = []
     
     var body: some View {
-        if !repositories.isEmpty {
-            List(repositories, id: \.id){ repository in
-                VStack{
-                    HStack{
-                        Text("name:\(repository.name)")
-                        Spacer()
+        NavigationStack{
+            Group{
+                if !repositories.isEmpty {
+                    List(repositories, id: \.id){ repository in
+                        VStack{
+                            HStack{
+                                Text("name:\(repository.name)")
+                                Spacer()
+                            }
+                            HStack{
+                                Text("⭐️✖️\(repository.stargazersCount)")
+                                Spacer()
+                            }
+                        }
                     }
-                    HStack{
-                        Text("⭐️✖️\(repository.stargazersCount)")
-                        Spacer()
-                    }
+                } else {
+                    Text("⚠️date nowloading")
                 }
             }
-        } else {
-            Text("⚠️date nowloading")
-                .task {
-                    do {
-                        let repoManager = GitHubRepositoryManager()
-                        let _ = try await repoManager.load(user: "apple")
-                        repositories = repoManager.majorRepository
-                    } catch let error as GitHubAPIError {
-                        print(error)
-                    } catch {
-                        print("unknown........")
-                    }
-                }
+            .navigationTitle("GitHub Repository")//NavigationStackにはつけれない。
+        }
+        .task {
+            do {
+                let repoManager = GitHubRepositoryManager()
+                let _ = try await repoManager.load(user: "apple")
+                repositories = repoManager.majorRepository
+            } catch let error as GitHubAPIError { //🍟
+                print(error)
+            } catch {
+                print("unknown........")
+            }
         }
     }
 }
