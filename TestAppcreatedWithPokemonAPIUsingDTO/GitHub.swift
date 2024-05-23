@@ -7,6 +7,35 @@
 
 import Foundation
 
+enum HTTPError: Error {
+    case badRequest // 400
+    case unauthorized // 401
+    case forbidden // 403
+    case notFound // 404
+    case internalServerError // 500
+    case serviceUnavailable // 503
+    case unknown // その他のエラー
+    
+    var localizedDescription: String {
+        switch self {
+        case .badRequest:
+            return "不正なリクエスト (400): 無効な構文のため、サーバーはリクエストを理解できませんでした。"
+        case .unauthorized:
+            return "認証が必要 (401): リクエストされたレスポンスを得るためにはクライアントが認証される必要があります。"
+        case .forbidden:
+            return "アクセス禁止 (403): クライアントはコンテンツにアクセスする権限がありません。"
+        case .notFound:
+            return "リソースが見つかりません (404): サーバーはリクエストされたリソースを見つけることができません。"
+        case .internalServerError:
+            return "サーバー内部エラー (500): サーバーは対応方法がわからない状況に直面しました。"
+        case .serviceUnavailable:
+            return "サービス利用不可 (503): サーバーは現在リクエストを処理できません。"
+        case .unknown:
+            return "不明なエラーが発生しました。"
+        }
+    }
+}
+
 enum GitHubAPIError: Error {
     case networkError // ネットワーク関連のエラー
     case invalidURL // 無効なURL
@@ -44,6 +73,10 @@ class GitHubAPIClient: GitHubAPIProtocol {
 }
 
 class MockGitHubClient: GitHubAPIProtocol {
+    
+    var returnHTTPError: HTTPError?
+    
+    var returnGitHubAPIError:
     
     var returnRepositories: [GitHubRepository] //①リポジトリを保持させるプロパティ
     var argsUser: String? //②引数を記録するプロパティ❓何に使うのか？
