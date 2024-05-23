@@ -18,7 +18,7 @@ enum GitHubAPIError: Error {
 }
 
 //エンティティ
-struct GitHubRepository: Decodable, Equatable, Comparable {
+struct GitHubRepository: Decodable, Comparable {
     static func < (lhs: GitHubRepository, rhs: GitHubRepository) -> Bool {
         return lhs.stargazersCount < rhs.stargazersCount
     }
