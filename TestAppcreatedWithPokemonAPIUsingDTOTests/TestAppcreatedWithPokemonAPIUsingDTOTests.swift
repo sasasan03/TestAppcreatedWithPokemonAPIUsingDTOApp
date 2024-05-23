@@ -92,17 +92,17 @@ class CalculatorTests: XCTestCase {
     
     func test_div(){
         XCTAssertEqual(calc.div(6, 3), 2)
-        XCTAssertEqual(calc.div(9, 2), 3)
-        XCTAssertNil(calc.div(5, 5))
+        XCTAssertEqual(calc.div(9, 3), 3)
+        XCTAssertNil(calc.div(5, 0))
     }
     
     func test_divRunActivity(){
         XCTContext.runActivity(named: "計算成功") { _ in
             XCTAssertEqual(calc.div(6, 3), 2)
-            XCTAssertEqual(calc.div(9, 2), 3)
+            XCTAssertEqual(calc.div(9, 3), 3)
         }
         XCTContext.runActivity(named: "0で割った") { _ in
-            XCTAssertNil(calc.div(5, 5))
+            XCTAssertNil(calc.div(5, 0))
         }
     }
 }
