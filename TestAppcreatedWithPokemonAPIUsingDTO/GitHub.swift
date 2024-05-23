@@ -43,16 +43,32 @@ class GitHubAPIClient: GitHubAPIProtocol {
     }
 }
 
+class MockGitHubClient: GitHubAPIProtocol {
+    
+    var returnRepositories: [GitHubRepository] //①リポジトリを保持させるプロパティ
+    var argsUser: String? //②引数を記録するプロパティ❓何に使うのか？
+    
+    init(repositories: [GitHubRepository]) {
+        self.returnRepositories = repositories
+    }
+    
+    func fetchRepository(user: String) async throws -> [GitHubRepository] {
+        self.argsUser = user
+        return returnRepositories
+    }
+    
+}
+
 
 protocol GitHubAPIProtocol {
     func fetchRepository(user: String) async throws -> [GitHubRepository]
 }
 
 
-// リポジトリの管理を行う。
+// リポジトリの管理を行う。Viewでインスタンス化させ、実行するクラス
 class GitHubRepositoryManager {
     
-    let client: GitHubAPIProtocol// 🍔型をプロトコルにする
+    private let client: GitHubAPIProtocol// 🍔型をプロトコルにする
     private var repository: [GitHubRepository]? = nil
     
     //スター数が１０個以上のリポジトリをフィルターし、スターの多い数からスタックに追加した配列を返す。
