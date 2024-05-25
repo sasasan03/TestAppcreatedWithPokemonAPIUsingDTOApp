@@ -11,7 +11,7 @@ import XCTest
 
 class GitHubAPITests: XCTestCase {
     
-    func test_load() async throws {
+    func test_テストが成功して値返す() async throws {
         //スタブ
         let gitHubRepositories = [
         GitHubRepository(id: 0, stargazersCount: 9, name: "name1"),
@@ -33,6 +33,9 @@ class GitHubAPITests: XCTestCase {
         XCTAssertEqual(repositories[1].stargazersCount, 10)
         XCTAssertEqual(repositories[2].name, "name3")
         
+    }
+    
+    func test_ネットワークエラーを返す(){
     }
     
 }

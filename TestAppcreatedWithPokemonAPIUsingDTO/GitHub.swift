@@ -76,7 +76,7 @@ class MockGitHubClient: GitHubAPIProtocol {
     
     var returnHTTPError: HTTPError?
     
-    var returnGitHubAPIError:
+    var returnGitHubAPIError: GitHubAPIError?
     
     var returnRepositories: [GitHubRepository] //①リポジトリを保持させるプロパティ
     var argsUser: String? //②引数を記録するプロパティ❓何に使うのか？
@@ -86,6 +86,8 @@ class MockGitHubClient: GitHubAPIProtocol {
     }
     
     func fetchRepository(user: String) async throws -> [GitHubRepository] {
+        if let returnHTTPError { throw returnHTTPError }
+        if let returnGitHubAPIError { throw returnGitHubAPIError }
         self.argsUser = user
         return returnRepositories
     }

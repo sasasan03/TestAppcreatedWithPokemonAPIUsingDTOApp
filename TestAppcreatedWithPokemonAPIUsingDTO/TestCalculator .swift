@@ -16,9 +16,9 @@ class Calculator {
         a - b
     }
     
-    func div(_ a: Int, _ b: Int) -> Int? {
+    func div(_ a: Double, _ b: Double) -> Double {
         if b == 0 {
-            return nil
+            return 0
         } else {
             return a / b
         }
@@ -67,20 +67,7 @@ class DateObject {
         let weekday = calendar.component(.weekday, from: date)
         return weekday == 1 || weekday == 7
     }
-    
-
-//    func isHoliday() -> Bool{
-//        let now = Date()
-//        let calendar = Calendar.current
-//        let weekday = calendar.component(.weekday, from: now)
-//        return weekday == 1 || weekday == 7
-//    }
-    
-//    func isHoliday(_ now: Date) -> Bool{ //🟨これはおっけ？
-//        print("#",now.description)
-//        let calendar = Calendar.current
-//        let weekday = calendar.component(.weekday, from: now)
-//        return weekday == 1 || weekday == 7
-//    }
 
 }
+
+

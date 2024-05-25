@@ -77,7 +77,7 @@ class CalculatorTests: XCTestCase {
             calc.add(10, 20),
             30,
             "値が等しくありません",
-            file: #file,//指定できちゃうけど、指定する必要はない。sqwiftではしょうがない。
+            file: #file,//指定できちゃうけど、指定する必要はない。swiftではこの方法でしか実装できない。
             line: #line//
         )
     }
@@ -104,8 +104,26 @@ class CalculatorTests: XCTestCase {
         XCTContext.runActivity(named: "0で割った") { _ in
             XCTAssertNil(calc.div(5, 0))
         }
+        
+        XCTContext.runActivity(named: "１１１") { _ in
+                   XCTContext.runActivity(named: "２２２") { _ in
+//                       XCTAssertEqual(calc.div(4, 4), 1)
+//                       XCTAssertEqual(calc.div(10, 3)!, 3.333, accuracy: 0.001)
+                   }
+               }
+    }
+    
+    func test_accuracy(){
+        //小数の計算で割り切れない場合は、どこまで小数を許容するのか記述しなければならない。
+        //🍔accuracy引数でどこまで許容するのか指定する。
+        XCTAssertEqual(calc.div(10, 3), 3.33, accuracy: 0.01)
+        XCTAssertEqual(calc.div(10, 3), 3.334, accuracy: 0.001)
+        XCTAssertEqual(calc.div(10, 3), 3.334, accuracy: 0.001)
     }
 }
+
+
+
 
 
 
@@ -161,7 +179,14 @@ class DataSourceTest: XCTestCase{
         }
     }
     
-    func test_fetchData2(){
+    func test_noXCTestExpectation(){ //🟥失敗例：関数が先に終了してしまう。
+        dataSource.fetchData(txt: "ko") { txt in
+            print("#test_test_noXCTestExpectation")
+            XCTFail()
+        }
+    }
+    
+    func test_fetchData2(){ //🟦XCTestExpectationを使ってテストを終了を遅らせる
         let exp: XCTestExpectation = expectation(description: "wait for finish")
         
         dataSource.fetchData(txt: "ko") { txt in
