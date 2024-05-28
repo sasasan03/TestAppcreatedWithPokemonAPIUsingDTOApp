@@ -9,8 +9,8 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var pokemons:[Pokemon] = []
-//    let client = PokemonListClient()
-    let client = MocAPIClient()
+    let client = PokemonListClient()
+//    let client = MocAPIClient()
     
     var body: some View {
         NavigationStack{
@@ -22,8 +22,8 @@ struct ContentView: View {
             }
             .task {
                 do {
-//                    pokemons = try await client.fetchPokemonDataList()
-                    pokemons = try await client.fetch()
+                    pokemons = try await client.fetchPokemonDataList()
+//                    pokemons = try await client.fetch()
                 } catch {
                     print(error)
                 }

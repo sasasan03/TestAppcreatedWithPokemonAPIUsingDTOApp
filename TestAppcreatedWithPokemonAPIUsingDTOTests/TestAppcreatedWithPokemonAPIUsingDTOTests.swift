@@ -78,11 +78,11 @@ class CalculatorTests: XCTestCase {
             30,
             "値が等しくありません",
             file: #file,//指定できちゃうけど、指定する必要はない。swiftではこの方法でしか実装できない。
-            line: #line//
+            line: #line
         )
     }
     
-    func この関数を読んだ行番号を表示(number: Int = #line){ //
+    func この関数を読んだ行番号を表示(number: Int = #line){
         print("\(number)行番号")
     }
     
@@ -121,9 +121,6 @@ class CalculatorTests: XCTestCase {
         XCTAssertEqual(calc.div(10, 3), 3.334, accuracy: 0.001)
     }
 }
-
-
-
 
 
 

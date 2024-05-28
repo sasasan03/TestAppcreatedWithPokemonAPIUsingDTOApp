@@ -11,9 +11,7 @@ import SwiftUI
 struct TestAppcreatedWithPokemonAPIUsingDTOApp: App {
     var body: some Scene {
         WindowGroup {
-//            ContentView()
-//            MocAPITest()
-            GitHubView()
+            ContentView()
         }
     }
 }

@@ -91,7 +91,6 @@ class MockGitHubClient: GitHubAPIProtocol {
         self.argsUser = user
         return returnRepositories
     }
-    
 }
 
 

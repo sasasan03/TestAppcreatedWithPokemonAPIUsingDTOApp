@@ -10,7 +10,7 @@ import Foundation
 struct Pokemon {
     let id: Int
     let name: String
-    let sprite: Sprite //画像しか持たせる予定はない。
+    let sprite: Sprite
 }
 
 struct Sprite {
