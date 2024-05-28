@@ -47,7 +47,7 @@ enum GitHubAPIError: Error {
 }
 
 //エンティティ
-struct GitHubRepository: Decodable, Comparable {
+struct GitHubRepository: Comparable {
     static func < (lhs: GitHubRepository, rhs: GitHubRepository) -> Bool {
         return lhs.stargazersCount < rhs.stargazersCount
     }
@@ -60,6 +60,14 @@ struct GitHubRepository: Decodable, Comparable {
 //データを取得するクラス
 class GitHubAPIClient: GitHubAPIProtocol {
     
+    struct ResponseDTO: Decodable {
+        struct GitHubRepository: Decodable {
+            let id: Int
+            let stargazersCount: Int
+            let name: String
+        }
+    }
+    
     func fetchRepository(user: String) async throws -> [GitHubRepository] {
         let url = URL(string: "https://api.github.com/users/\(user)/repos")
         guard let url else { throw GitHubAPIError.invalidURL }
@@ -67,8 +75,24 @@ class GitHubAPIClient: GitHubAPIProtocol {
         let (data, _) = try await URLSession.shared.data(for: request)
         let jsonDecoder = JSONDecoder()
         jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
-        let gitHubRepositories = try jsonDecoder.decode([GitHubRepository].self, from: data)
-        return gitHubRepositories
+        let dto = try jsonDecoder.decode([ResponseDTO.GitHubRepository].self, from: data)
+        return [GitHubRepository](dto: dto)
+    }
+}
+
+private extension GitHubRepository {
+    init(dto: GitHubAPIClient.ResponseDTO.GitHubRepository){
+        self = .init(
+            id: dto.id,
+            stargazersCount: dto.stargazersCount,
+            name: dto.name
+        )
+    }
+}
+
+private extension [GitHubRepository] {
+    init(dto: [GitHubAPIClient.ResponseDTO.GitHubRepository]){
+        self = dto.map{ GitHubRepository(dto: $0) }
     }
 }
 
