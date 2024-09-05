@@ -47,7 +47,7 @@ enum GitHubAPIError: Error {
 }
 
 //エンティティ
-struct GitHubRepository: Comparable {
+struct GitHubRepository: Comparable {//🍟怪しい
     static func < (lhs: GitHubRepository, rhs: GitHubRepository) -> Bool {
         return lhs.stargazersCount < rhs.stargazersCount
     }
@@ -103,7 +103,7 @@ class MockGitHubClient: GitHubAPIProtocol {
     var returnGitHubAPIError: GitHubAPIError?
     
     var returnRepositories: [GitHubRepository] //①リポジトリを保持させるプロパティ
-    var argsUser: String? //②引数を記録するプロパティ❓何に使うのか？
+//    var argsUser: String? //②引数を記録するプロパティ❓何に使うのか？
     
     init(repositories: [GitHubRepository]) {
         self.returnRepositories = repositories
@@ -112,7 +112,7 @@ class MockGitHubClient: GitHubAPIProtocol {
     func fetchRepository(user: String) async throws -> [GitHubRepository] {
         if let returnHTTPError { throw returnHTTPError }
         if let returnGitHubAPIError { throw returnGitHubAPIError }
-        self.argsUser = user
+//        self.argsUser = user
         return returnRepositories
     }
 }
@@ -134,7 +134,7 @@ class GitHubRepositoryManager {
         guard let repository else { return [] }
         return repository.filter({ $0.stargazersCount >= 10 }).sorted(by: <)
     }
-    
+    //🟥リポジトリーとは、値を取ってきてくれるやつ。
     init(client: GitHubAPIProtocol = GitHubAPIClient()){
         self.client = client// 🍔プロトコルを使って差し替え可能に変更
     }

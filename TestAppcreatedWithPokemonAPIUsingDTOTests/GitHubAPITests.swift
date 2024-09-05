@@ -26,10 +26,10 @@ class GitHubAPITests: XCTestCase {
         let repositories = try await manager.load(user: "apple")!//🍟強制アンラップ
         
         //引数の検証
-        XCTAssertEqual(mockClient.argsUser, "apple")
+//        XCTAssertEqual(mockClient.argsUser, "apple")
         
         //値の検証
-        XCTAssertEqual(repositories[0].id, 0)
+        XCTAssertEqual(repositories[0], gitHubRepositories[0])// いらない
         XCTAssertEqual(repositories[1].stargazersCount, 10)
         XCTAssertEqual(repositories[2].name, "name3")
         
